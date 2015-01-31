@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Jams Map</title>
+  <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+  <link rel=stylesheet href="css/map.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+  <script src="js/vendor.min.js"></script>
+
+</head>
+<body ng-app="StudyJams">
+
+  <section ng-controller="MapCtrl">
+
+    <div class="loader" ng-if="!map_ready"></div>
+    <div class="location-map-container" ng-class="{ready: map_ready}">
+      <div class="location-switch-modes">
+        <button ng-click="event_map.show='map'" ui-show="event_map.show=='map'" class="ui-show">Map</button>
+        <button ng-click="event_map.show='list'" ui-show="event_map.show=='list'">List</button>
+      </div>
+
+      <div id="location-event-map" class="map-canvas" ng-show="event_map.show=='map'" ui-map="event_map.map" ui-options="event_map.map_options"></div>
+
+      <!-- <div class="registration-instructions" ng-show="event_map.show=='list'">
+        <p class="to-register">To Register:</p>
+        <ol class="register-course">
+          <li><a href="https://www.udacity.com/account/affiliate/StudyJam" target="_blank">Sign up for the Udacity Android Fundamentals course</a></li>
+          <li>Browse to "Developing Android Apps" course</li>
+          <li>Select "Access Course Materials" to complete course sign up</li>
+          <li>Register for the Study Jam event on the local event page (listed below)</li>
+        </ol>
+      </div> -->
+      <div class="search" ng-show="event_map.show=='list'">
+        <input type="text" ng-model="searchText" placeholder="Search for location">
+        <!-- <p>Search for location</p> -->
+      </div>
+      <ul id="location-event-list" class="location-event-list" ng-show="event_map.show=='list'">
+        <li ng-repeat="event in event_map.events | filter:searchFilter">
+          <div class="event-wrapper" ui-show="event_map.selected === $index">
+            <div class="top-border"></div>
+            <div class="bottom-border"></div>
+            <time datetime="{{event.start|coerceDate|date:'yyyy/mm/dd'}}" ng-bind="event.start|coerceDate|date:'longDate'"></time>
+            <h3 class="event-title"><a href="{{event.event_url}}" target="_blank">{{event.name}}</a></h3>
+            <!-- {{event.group}} -->
+            <p class="event-location" ng-bind="event.location"></p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+  </section>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+  <script src="js/plugins.min.js"></script>
+  <script src="js/map.min.js"></script>
+</body>
+</html>
