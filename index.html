@@ -176,9 +176,13 @@
       <p>在你的hosts文件中添加以下内容</p>
 
       <pre><script type="text/javascript">
-          document.write(location.host + " dl-ssl.google.com\n");
-          document.write(location.host + " dl.google.com\n");
-          document.write(location.host + " studyjams.dushu.hu\n");
+        var host = location.host;
+        if (host == "studyjams.dushu.hu") {
+          host = "106.185.26.96";
+        }
+        document.write(host + " dl-ssl.google.com\n");
+        document.write(host + " dl.google.com\n");
+        document.write(host + " studyjams.dushu.hu\n");
       </script></pre>
 
       <p>创建目录</p>
