@@ -76,7 +76,56 @@ CPU acceleration status: KVM is not installed on this machine (/dev/kvm is missi
         <p>Still not works in a VirtualBox.</p>
       </div>
 
-      <h3>Download Android Studio and SDK Tools</h3>
+      <h2 id="Requirements">System Requirements</h2>
+
+      <h3>Windows</h3>
+
+      <ul>
+        <li>Microsoft&reg;  Windows&reg;  8/7/Vista/2003 (32 or 64-bit)</li>
+        <li>2 GB RAM minimum, 4 GB RAM recommended</li>
+        <li>400 MB hard disk space</li>
+        <li>At least 1 GB for Android SDK, emulator system images, and caches</li>
+        <li>1280 x 800  minimum screen resolution</li>
+        <li><a href="jdk7/jdk-7u75-windows-x64.exe">Java Development Kit (JDK) 7</a></li>
+        <li>Optional for accelerated emulator: Intel® processor with support for Intel® VT-x, Intel® EM64T
+        (Intel® 64), and Execute Disable (XD) Bit functionality</li>
+      </ul>
+
+
+      <h3>Mac OS X</h3>
+
+      <ul>
+        <li>Mac&reg;  OS X&reg;  10.8.5 or higher, up to 10.9 (Mavericks)</li>
+        <li>2 GB RAM minimum, 4 GB RAM recommended</li>
+        <li>400 MB hard disk space</li>
+        <li>At least 1 GB for Android SDK, emulator system images, and caches</li>
+        <li>1280 x 800 minimum screen resolution</li>
+        <li>Java Runtime Environment (JRE) 6</li>
+        <li><a href="jdk7/jdk-7u75-macosx-x64.dmg">Java Development Kit (JDK) 7</a></li>
+        <li>Optional for accelerated emulator: Intel® processor with support for Intel® VT-x, Intel® EM64T
+        (Intel® 64), and Execute Disable (XD) Bit functionality</li>
+      </ul>
+
+      <p>On Mac OS, run Android Studio with Java Runtime Environment (JRE) 6 for optimized font
+      rendering. You can then configure your project to use Java Development Kit (JDK) 6 or JDK 7.</p>
+
+
+
+      <h3>Linux</h3>
+
+      <ul>
+        <li>GNOME or KDE desktop</li>
+        <li>GNU C Library (glibc) 2.15 or later</li>
+        <li>2 GB RAM minimum, 4 GB RAM recommended</li>
+        <li>400 MB hard disk space</li>
+        <li>At least 1 GB for Android SDK, emulator system images, and caches</li>
+        <li>1280 x 800 minimum screen resolution</li>
+        <li><a href="jdk7/jdk-7u75-linux-x64.gz">Oracle&reg;  Java Development Kit (JDK) 7</a></li>
+      </ul>
+      <p>Tested on Ubuntu&reg;  14.04, Trusty Tahr (64-bit distribution capable of running
+      32-bit applications).</p>
+
+      <h2>Download Android Studio and SDK Tools</h2>
 
       <!-- http://developer.android.com/sdk/index.html#Other -->
       <iframe src="sdk/index.html" width="100%" height="760"></iframe>
@@ -124,12 +173,12 @@ CPU acceleration status: KVM is not installed on this machine (/dev/kvm is missi
       <pre># Linux/Mac users
 tools/android helpful
 tools/android list sdk
-tools/android update sdk --no-ui</pre>
+tools/android update sdk</pre>
 
       <pre>@rem Windows users
 tools\android helpful
 tools\android list sdk
-tools\android update sdk --no-ui</pre>
+tools\android update sdk</pre>
 
     </section>
 
