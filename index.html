@@ -52,7 +52,7 @@
       </div>
 
       <!-- http://developer.android.com/sdk/index.html#Other -->
-      <iframe src="dl/android/index.html" width="100%" height="760" style="margin: 4em auto;"></iframe>
+      <iframe src="sdk/index.html" width="100%" height="760" style="margin: 4em auto;"></iframe>
 
       <div style="display:none;">
         <h3>SDK Tools Only</h3>
@@ -179,6 +179,8 @@
         var host = location.host;
         if (host == "studyjams.dushu.hu") {
           host = "106.185.26.96";
+        } else if (host == "localhost") {
+          host = "127.0.0.1";
         }
         document.write(host + " dl-ssl.google.com\n");
         document.write(host + " dl.google.com\n");
@@ -214,6 +216,11 @@ tools/android helpful
 tools/android list sdk
 tools/android update sdk</pre>
 
+      <pre>@rem Windows users
+tools\android helpful
+tools\android list sdk
+tools\android update sdk</pre>
+
     </section>
 
     <section class="find-event padded-top">
@@ -239,7 +246,8 @@ tools/android update sdk</pre>
       </div>
       <div class="banner">
 
-        <iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?widget=true&amp;headers=false" width="100%" height="500"></iframe>
+        <!--<iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?widget=true&amp;headers=false" width="100%" height="500"></iframe>-->
+        <iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?gid=1640877400&amp;single=true&amp;widget=true&amp;headers=false" width="100%" height="500"></iframe>
 
         <div class="container">
           <div class="row">
