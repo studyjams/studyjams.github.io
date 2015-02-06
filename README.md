@@ -15,7 +15,7 @@ script/download.sh
 
 You'll need a web server to host the web site. I'm using tomcat on Windows because, I can use a zip version, and it's easy to setup [https](http://tomcat.apache.org/tomcat-6.0-doc/ssl-howto.html#Quick_Start). https is for quick failover when fetching [repository-10.xml and addons_list-2.xml](https://github.com/renfeng/android-repository/issues/1)
 
-[http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html#EXAMPLES](To generate self-signed ssl certificate in a single command line without user interaction):
+[To generate self-signed ssl certificate in a single command line without user interaction](http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html#EXAMPLES):
 
 ```
 keytool -genkey -alias tomcat -keyalg RSA -storepass changeit -keypass changeit -dname "cn=Frank R., ou=Study Jams, o=GDG Suzhou, l=Suzhou, st=Jiangsu, c=CN"
