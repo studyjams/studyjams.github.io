@@ -32,3 +32,5 @@ To removed the certifcate:
 ```
 keytool -delete -alias tomcat -storepass changeit
 ```
+
+# TODO How to setup ports, HTTP (80) and HTTPS (443)
