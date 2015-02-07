@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="wall-horizontal.svg"
-   inkscape:export-filename="/home/renfeng/Downloads/android-repository/wall-horizontal.png"
+   inkscape:export-filename="wall-horizontal.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -6961,7 +6961,7 @@
       <image
          width="3440.6399"
          height="983.04004"
-         xlink:href="file:///home/renfeng/Downloads/android-repository/gdg-suzhou-museum-transparent.png"
+         xlink:href="gdg-suzhou-museum-transparent.png"
          id="image14245"
          x="17413.537"
          y="-9147.832" />
@@ -7217,14 +7217,14 @@
       <image
          width="2839.2104"
          height="632.39185"
-         xlink:href="file:///home/renfeng/Downloads/android-repository/Juhe_Logo.png"
+         xlink:href="Juhe_Logo.png"
          id="image24450"
          x="11358.972"
          y="-185.10583" />
       <image
          width="3079.9727"
          height="829.17303"
-         xlink:href="file:///home/renfeng/Downloads/android-repository/logo_gaobo.png"
+         xlink:href="logo_gaobo.png"
          id="image24515"
          x="7310.563"
          y="-283.49643" />
