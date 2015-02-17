@@ -1,3 +1,9 @@
-*.zip
-*.xml
+*.exe
 *.orig
+*.sh
+*.tgz
+*.xml
+*.zip
+dl
+script
+sdk/index.html
