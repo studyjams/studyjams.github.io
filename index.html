@@ -62,8 +62,9 @@
       </div>
       <div class="banner">
 
-        <!--<iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?widget=true&amp;headers=false" width="100%" height="500"></iframe>-->
-        <iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?gid=1640877400&amp;single=true&amp;widget=true&amp;headers=false" width="100%" height="500"></iframe>
+        <iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?widget=true&amp;headers=false" width="100%" height="500"></iframe>
+        <!--<iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?gid=1640877400&amp;single=true&amp;widget=true&amp;headers=false" width="100%" height="500"></iframe>-->
+        <!--<iframe src="https://docs.google.com/spreadsheets/d/1qdjvMYW1drdJ1aL0fI_svlRKyMAQfieUReN6uj_fqnA/pubhtml?gid=1099924999&amp;single=true&amp;widget=true&amp;headers=false" width="100%" height="500"></iframe>-->
 
         <div class="container">
           <div class="row">
@@ -188,6 +189,11 @@
       <p>Tested on Ubuntu&reg;  14.04, Trusty Tahr (64-bit distribution capable of running
       32-bit applications).</p>
 
+      <p>Make the jdk downloaded default</p>
+      <!-- TODO make the version consistent with the jdk links above -->
+      <pre>sudo update-alternatives --install "/usr/bin/java" java "/opt/jdk1.7.0_75/bin/java" 1
+sudo update-alternatives --config java</pre>
+
       <h2>Download Android Studio and SDK Tools</h2>
 
       <!-- http://developer.android.com/sdk/index.html#Other -->
@@ -212,10 +218,10 @@
       <p>创建目录</p>
 
       <pre># Linux/Mac users
-        ~/.android</pre>
+~/.android</pre>
 
       <pre>@rem Windows uses
-        %userprofile%\.android</pre>
+%userprofile%\.android</pre>
 
       <p>将下列文件保存到以上目录中</p>
 
