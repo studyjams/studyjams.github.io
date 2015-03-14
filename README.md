@@ -33,4 +33,6 @@ To removed the certifcate:
 keytool -delete -alias tomcat -storepass changeit
 ```
 
+Note: Tomcat doesn't support soft link inside a exploded war (nor does Chrome Dev Editor)
+
 # TODO How to setup ports, HTTP (80) and HTTPS (443)
