@@ -155,8 +155,8 @@
         } else if (host == "localhost") {
           host = "127.0.0.1";
         }
-        // document.write(host + " dl-ssl.google.com\n");
-        // document.write(host + " dl.google.com\n");
+        document.write(host + " dl-ssl.google.com\n");
+        document.write(host + " dl.google.com\n");
         if (host != "106.185.26.96") {
           document.write(host + " studyjams.dushu.hu\n");
         }
@@ -241,7 +241,7 @@ sudo update-alternatives --config java</pre>
       <p>Linux 用户可以使用下面的命令行下载和解压 Android Studio 和 SDK Manager （请使用以上表格中的地址）</p>
 
       <!-- TODO auto update the links to latest Android Studio and SDK Manager -->
-      <pre>wget http://studyjams.dushu.hu/android/android-sdk_r24.0.2-linux.tgz -O - | sudo tar -zxf -
+      <pre>wget http://studyjams.dushu.hu/android/android-sdk_r24.0.2-linux.tgz -O - | tar -zxf -
 wget http://studyjams.dushu.hu/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip -P /tmp
 sudo unzip /tmp/android-studio-ide-135.1740770-linux.zip -d /opt</pre>
 
