@@ -141,6 +141,45 @@
 
       <h1>配置开发环境</h1>
 
+      <h2 id="Requirements">（可选）如果镜像在局域网内</h2>
+
+      <p>在你的hosts文件中添加以下几行</p>
+
+      <pre><script type="text/javascript">
+        /*
+         * assumes http(s) default port
+         */
+        var host = location.host;
+        if (host == "studyjams.dushu.hu") {
+          host = "106.185.26.96";
+        } else if (host == "localhost") {
+          host = "127.0.0.1";
+        }
+        // document.write(host + " dl-ssl.google.com\n");
+        // document.write(host + " dl.google.com\n");
+        if (host != "106.185.26.96") {
+          document.write(host + " studyjams.dushu.hu\n");
+        }
+      </script></pre>
+
+      <p>Linux 用户可以利用下面的命令行</p>
+
+      <pre><script type="text/javascript">
+        document.write("echo '" + host + " dl-ssl.google.com' | sudo tee -a /etc/hosts\n");
+        document.write("echo '" + host + " dl.google.com' | sudo tee -a /etc/hosts\n");
+        if (host != "106.185.26.96") {
+          document.write("echo '" + host + " studyjams.dushu.hu' | sudo tee -a /etc/hosts\n");
+        }
+      </script></pre>
+
+      <p>Linux 用户完成下载后，可以使用下面的命令行从 Hosts 中删除以上几行</p>
+
+      <pre>cat /etc/hosts | \
+sed 'N; s/\n.* dl-ssl.google.com//g; P; D' | \
+sed 'N; s/\n.* dl.google.com//g; P; D' | \
+sed 'N; s/\n.* studyjams.dushu.hu//g; P; D' | \
+sudo tee /etc/hosts</pre>
+
       <h2 id="Requirements">System Requirements</h2>
 
       <h3>Windows</h3>
@@ -174,8 +213,6 @@
       <p>On Mac OS, run Android Studio with Java Runtime Environment (JRE) 6 for optimized font
       rendering. You can then configure your project to use Java Development Kit (JDK) 6 or JDK 7.</p>
 
-
-
       <h3>Linux</h3>
 
       <ul>
@@ -190,9 +227,10 @@
       <p>Tested on Ubuntu&reg;  14.04, Trusty Tahr (64-bit distribution capable of running
       32-bit applications).</p>
 
-      <p>Make the jdk downloaded system default (recommended location for extracting jdk, /opt)</p>
+      <p>Linux 用户可以使用下面的命令行下载和解压推荐的 JDK 版本, 并设置成操作系统默认的 JDK</p>
       <!-- TODO make the version consistent with the jdk links above -->
-      <pre>sudo update-alternatives --install "/usr/bin/java" java "/opt/jdk1.7.0_75/bin/java" 1
+      <pre>wget http://studyjams.dushu.hu/jdk7/jdk-7u75-linux-x64.gz -O - | sudo tar -zxf - -C /opt
+sudo update-alternatives --install "/usr/bin/java" java "/opt/jdk1.7.0_75/bin/java" 1
 sudo update-alternatives --config java</pre>
 
       <h2>Download Android Studio and SDK Tools</h2>
@@ -200,57 +238,58 @@ sudo update-alternatives --config java</pre>
       <!-- http://developer.android.com/sdk/index.html#Other -->
       <iframe src="sdk/index.html" width="100%" height="760"></iframe>
 
-      <h3>Local Android SDK Repository</h3>
+      <p>Linux 用户可以使用下面的命令行下载和解压 Android Studio 和 SDK Manager （请使用以上表格中的地址）</p>
 
-      <p>在你的hosts文件中添加以下内容</p>
+      <!-- TODO auto update the links to latest Android Studio and SDK Manager -->
+      <pre>wget http://studyjams.dushu.hu/android/android-sdk_r24.0.2-linux.tgz -O - | sudo tar -zxf -
+wget http://studyjams.dushu.hu/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip -P /tmp
+sudo unzip /tmp/android-studio-ide-135.1740770-linux.zip -d /opt</pre>
 
-      <pre><script type="text/javascript">
-        var host = location.host;
-        if (host == "studyjams.dushu.hu") {
-          host = "106.185.26.96";
-        } else if (host == "localhost") {
-          host = "127.0.0.1";
-        }
-        document.write(host + " dl-ssl.google.com\n");
-        document.write(host + " dl.google.com\n");
-        document.write(host + " studyjams.dushu.hu\n");
-      </script></pre>
+      <h2>SDK Manager 配置文件</h2>
+
+      <p>下载三个配置文件，让 SDK Manager 从镜像下载文件</p>
 
       <p>创建目录</p>
 
-      <pre># Linux/Mac users
-~/.android</pre>
-
-      <pre>@rem Windows uses
-%userprofile%\.android</pre>
+      <ul>
+        <li>Linux 和 Mac OS X 用户: ~/.android</li>
+        <li>Windows 用户: %userprofile%\.android</li>
+      </ul>
 
       <p>将下列文件保存到以上目录中</p>
 
       <ul>
         <li>
-          <a href="script/client/sites-settings.cfg">sites-settings.cfg</a>
+          <a href="script/client/sites-settings.cfg" target="_blank">sites-settings.cfg</a>
         </li>
         <li>
-          <a href="script/client/repositories.cfg">repositories.cfg</a>
+          <a href="script/client/repositories.cfg" target="_blank">repositories.cfg</a>
         </li>
         <li>
-          <a href="script/client/androidtool.cfg">androidtool.cfg</a>
+          <a href="script/client/androidtool.cfg" target="_blank">androidtool.cfg</a>
         </li>
       </ul>
 
-      <p>更新SDK</p>
+      <p>Linux 和 Mac OS X 用户可以使用下面的命令行</p>
 
-      <pre># Linux/Mac users
-tools/android helpful
-tools/android list sdk
-tools/android update sdk</pre>
+      <pre><script type="text/javascript">
+        document.write("wget " + host + "/script/client/sites-settings.cfg -N -P ~/.android\n");
+        document.write("wget " + host + "/script/client/repositories.cfg -N -P ~/.android\n");
+        document.write("wget " + host + "/script/client/androidtool.cfg -N -P ~/.android\n");
+      </script></pre>
 
-      <pre>@rem Windows users
-tools\android helpful
-tools\android list sdk
-tools\android update sdk</pre>
+      <h2>启动 Android Studio</h2>
+
+      <p>Linux 用户可以使用下面的命令行</p>
+
+      <pre>export JAVA_HOME=/opt/jdk1.7.0_75
+/opt/android-studio/bin/studio.sh</pre>
 
       <h2>注意事项</h2>
+
+      <h3>HAXM is NOT required</h3>
+
+      <p>Linux 用户如果看到 <span style="color: red;">HAXM is required for running x86 System Images</span>, 可以忽略。</p>
 
       <h3>建议不要使用32位 Linux 操作系统</h3>
 
