@@ -1,0 +1,19 @@
+<html>
+  <header>
+	  <script src="js/papaparse.js"></script>
+  </header>
+  <body>
+    <script type="text/javascript">
+var file = "packages.csv";
+
+// Parse local CSV file
+Papa.parse(file, {
+  download: true,
+  header: true,
+	complete: function(results) {
+		console.log("Finished:", results);
+	}
+});
+    </script>
+  </body>
+</html>
