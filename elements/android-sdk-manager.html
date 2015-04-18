@@ -1,0 +1,149 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--<link rel="import" href="../bower_components/core-ajax/core-ajax.html">-->
+<!--<link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">-->
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/core-label/core-label.html">
+
+<polymer-element name="android-sdk-manager">
+  <template>
+    <core-scaffold>
+      
+      <core-header-panel navigation flex>
+        <core-toolbar id="navheader">
+          <span>Android SDK Manager</span>
+        </core-toolbar>
+        <core-menu selected="{{selectedGroup}}">
+          <template repeat="{{g in groups}}">
+            <core-item label="{{g.name}}"></core-item>
+          </template>
+        </core-menu>
+      </core-header-panel>
+      
+      <div tool>
+        <span>Packages</span>
+        <span flex> </span>
+        <core-icon-button icon="cloud" label="List URLs"></core-icon-button>
+      </div>
+      
+      <!--<core-list data="{{groups[selectedGroup].packages}}" height="80">-->
+      <!--  <template>-->
+      <!--    <core-label horizontal layout>-->
+      <!--      <paper-checkbox for></paper-checkbox>-->
+      <!--      <div vertical layout>-->
+      <!--        <h4>{{model.name + (model.obsolete ? " (Obsolete)" : "")}}</h4>-->
+      <!--        <p>API {{model["api-level"]}}</p>-->
+      <!--        <p>Rev. {{model.revision}}</p>-->
+      <!--      </div>-->
+      <!--    </core-label>-->
+      <!--  </template>-->
+      <!--</core-list>-->
+      <div style="padding: 1em;">
+        <template repeat="{{model in groups[selectedGroup].packages}}">
+          <div>
+            <core-label horizontal layout>
+              <paper-checkbox for style="padding-right: 1em;"></paper-checkbox>
+              <div vertical layout>
+                <b>{{model.name + (model.obsolete == "true" ? " (Obsolete)" : "")}}</b>
+                <p>{{model["api-level"] ? "API " + model["api-level"] : ""}} Rev. {{model.revision}}</p>
+              </div>
+            </core-label>
+          </div>
+        </template>
+      </div>
+
+    </core-scaffold>
+  </template>
+  <script src="../js/papaparse.js"></script>
+  <script>
+    Polymer({
+      selectedGroup : 0,
+      ready: function() {
+
+        var myElement = this;
+        var file = "packages.csv";
+        
+        // Parse local CSV file
+        Papa.parse(file, {
+          download: true,
+          header: true,
+          /*
+           * support csv files ending with empty last line · Issue #150 · mholt/PapaParse
+           * https://github.com/mholt/PapaParse/issues/150
+           */
+          skipEmptyLines: true,
+        	complete: function(results) {
+        		console.log("Finished:", results);
+        		myElement.packages = results;
+        		
+        		/*
+        		 * api-level and group mapping - group name = Android {SDK Platform version} (API {api-level})
+        		 */
+        		var groups = {};
+        		for (var i in results.data) {
+        		  var p = results.data[i];
+        		  var n;
+        		  if (p.name == "Android SDK Tools" || 
+        		      p.name == "Android SDK Platform-tools" || 
+        		      p.name == "Android SDK Build-tools") {
+    		        n = "Tools";
+    		      } else if (p["api-level"] == "") {
+    		        n = "Extras";
+    		      } else {
+    		        n = "API " + p["api-level"];
+    		      }
+      		    var g = groups[n];
+      		    if (!g) {
+      		      g = {
+      		        packages : []
+      		      };
+      		      if (n == "Tools" || n == "Extras") {
+      		        g.name = n;
+      		      }
+      		      groups[n] = g;
+      		    }
+      		    g.packages.push(p);
+      		    if (p.name == "SDK Platform") {
+      		      g.name = "Android " + p.version + " (" + n + ")";
+      		      g["api-level"] = p["api-level"];
+      		    }
+        		}
+        		console.log(groups);
+
+        		myElement.groups = [];
+        		var maxApiLevel = 0;
+        		for (var n in groups) {
+        		  myElement.groups.push(groups[n]);
+        		  
+        		  var apiLevel = parseInt(groups[n]["api-level"]);
+        		  if (maxApiLevel < apiLevel) {
+        		    maxApiLevel = apiLevel;
+        		  }
+        		}
+
+        		groups["Tools"]["api-level"] = maxApiLevel + 1;
+        		groups["Extras"]["api-level"] = 0;
+        		myElement.groups.sort(function(a, b) {
+        		  return parseInt(b["api-level"]) - parseInt(a["api-level"]);
+        		});
+        		
+      		  groups["Tools"].packages.sort(function(a, b) {
+      		    return parseInt(b.revision) - parseInt(a.revision);
+      		  });
+      		  
+        		return;
+        	}
+        });
+
+      },     
+      updateModel: function() {
+      }
+    });
+  </script>
+</polymer-element>

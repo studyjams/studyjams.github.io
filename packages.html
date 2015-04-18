@@ -2,19 +2,39 @@
 <html>
   <head>
 
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
+
     <!-- 1. Load platform support before any code that touches the DOM. -->
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <!-- 2. Load the component using an HTML Import -->
-    <link rel="import" href="elements/my-element.html">
+    <link rel="import" href="elements/android-sdk-manager.html" />
+    <link rel="import" href="bower_components/font-roboto/roboto.html" />
+    
+    <style shim-shadowdom>
+      html,body {
+        height: 100%;
+        margin: 0;
+        background-color: #E5E5E5;
+        font-family: 'RobotoDraft', sans-serif;
+      }
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      paper-checkbox {
+        padding: 20px;
+      }
+    </style>
 
   </head>
-  <body>
+  <body fullbleed vertical layout unresolved>
 
     <script type="text/javascript">
     </script>
 
     <!-- 3. Declare the element by its tag. -->
-    <my-element></my-element>
+    <android-sdk-manager></android-sdk-manager>
 
   </body>
 </html>
