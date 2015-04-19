@@ -6,5 +6,6 @@
 *.zip
 dl
 orig
+packages.csv
 script
 sdk/index.html

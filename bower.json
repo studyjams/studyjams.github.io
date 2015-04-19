@@ -25,6 +25,8 @@
     "core-list": "Polymer/core-list#~0.5.5",
     "paper-checkbox": "Polymer/paper-checkbox#~0.5.5",
     "core-label": "Polymer/core-label#~0.5.5",
-    "paper-fab": "Polymer/paper-fab#~0.5.5"
+    "paper-fab": "Polymer/paper-fab#~0.5.5",
+    "core-dropdown": "Polymer/core-dropdown#~0.5.5",
+    "core-collapse": "Polymer/core-collapse#~0.5.5"
   }
 }

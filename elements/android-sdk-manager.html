@@ -11,6 +11,8 @@
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/core-label/core-label.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/core-dropdown/core-dropdown.html">
+<link rel="import" href="../bower_components/core-collapse/core-collapse.html">
 
 <polymer-element name="android-sdk-manager">
   <template>
@@ -19,8 +21,34 @@
       <core-header-panel navigation flex>
         <core-toolbar id="navheader">
           <span>Filters</span>
-          <core-icon-button icon="filter-list" label="List URLs" onclick="{{changeList}}"></core-icon-button>
+          <div relative>
+            <core-icon-button id="sdkFilter" icon="filter-list" label="List URLs" on-tap="{{toggleFilterDisplay}}"></core-icon-button>
+            <!--<core-dropdown relatedTarget="{{$.sdkFilter}}" id="xxx">-->
+            <!--  <core-label horizontal layout>-->
+            <!--    <paper-checkbox for style="padding-right: 1em;" checked="{{showObsolete}}"></paper-checkbox>-->
+            <!--    <p>Show obsolete</p>-->
+            <!--  </core-label>-->
+            <!--</core-dropdown>-->
+          </div>
         </core-toolbar>
+        <core-collapse id="filterContainer">
+            <core-label horizontal layout style="padding: 1em;">
+              <paper-checkbox for style="padding-right: 1em;" checked="{{showObsolete}}" on-change="{{refresh}}"></paper-checkbox>
+              <span>Obsolete</span>
+            </core-label>
+            <core-label horizontal layout style="padding: 1em;">
+              <paper-checkbox for style="padding-right: 1em;" checked="{{navigatorPlatform.linux}}"></paper-checkbox>
+              <span>Linux</span>
+            </core-label>
+            <core-label horizontal layout style="padding: 1em;">
+              <paper-checkbox for style="padding-right: 1em;" checked="{{navigatorPlatform.macosx}}"></paper-checkbox>
+              <span>Macosx</span>
+            </core-label>
+            <core-label horizontal layout style="padding: 1em;">
+              <paper-checkbox for style="padding-right: 1em;" checked="{{navigatorPlatform.windows}}"></paper-checkbox>
+              <span>Windows</span>
+            </core-label>
+        </core-collapse>
         <core-menu selected="{{selectedGroup}}">
           <template repeat="{{g in groups}}">
             <core-item label="{{g.name}}"></core-item>
@@ -76,6 +104,22 @@
       showObsolete: true,
       ready: function() {
 
+        if (navigator.platform.indexOf("Linux") == -1) {
+          this.navigatorPlatform.linux = false;
+        }
+        if (navigator.platform.indexOf("Macosx") == -1) {
+          this.navigatorPlatform.macosx = false;
+        }
+        if (navigator.platform.indexOf("Windows") == -1) {
+          this.navigatorPlatform.windows = false;
+        }
+
+        this.refresh();
+
+        return;
+      },
+      refresh: function() {
+        
         var myElement = this;
         var file = "packages.csv";
 
@@ -155,6 +199,8 @@
         		return;
         	}
         });
+
+        return;
       },
     	listURLs: function(event, detail, sender) {
         // console.log(event);
@@ -182,6 +228,10 @@
         console.log(urlList);
         
         return;
+    	},
+    	toggleFilterDisplay: function(event, detail, sender) {
+    	 // console.log("toggle");
+    	  this.$.filterContainer.toggle();
     	},
       updateModel: function() {
       }
