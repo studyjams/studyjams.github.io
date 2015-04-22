@@ -135,10 +135,13 @@
             console.log("Loaded Android SDK packages:", results);
             myElement.packages = results;
 
+            /*
+             * http://stackoverflow.com/a/19883965
+             */
             // myElement.navigatorPlatform = {};
             myElement.navigatorPlatform.linux = navigator.platform.indexOf("Linux") != -1;
-            myElement.navigatorPlatform.macosx = navigator.platform.indexOf("Macosx") != -1;
-            myElement.navigatorPlatform.windows = navigator.platform.indexOf("Windows") != -1;
+            myElement.navigatorPlatform.macosx = navigator.platform.indexOf("Mac") != -1;
+            myElement.navigatorPlatform.windows = navigator.platform.indexOf("Win32") != -1;
 
             myElement.refresh1(myElement);
 
