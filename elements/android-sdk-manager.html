@@ -19,7 +19,7 @@
 <polymer-element name="android-sdk-manager">
   <template>
     <core-scaffold>
-      
+
       <core-header-panel navigation flex>
         <core-toolbar id="navheader">
           <span>Filters</span>
@@ -57,13 +57,13 @@
             </core-label>
         </core-collapse>
       </core-header-panel>
-      
+
       <div tool style="padding: ">
         <span>Android SDK Web Manager</span>
         <!--<span flex> </span>-->
         <core-icon-button icon="shopping-cart" on-tap="{{toggleUrlDisplay}}">{{urlList.length}}</core-icon-button>
       </div>
-      
+
       <!--<core-list data="{{groups[selectedGroup].packages}}" height="80">-->
       <!--  <template>-->
       <!--    <core-label horizontal layout>-->
@@ -100,7 +100,7 @@
         <!--  <core-icon-button icon="content-copy"></core-icon-button>-->
         <!--</cp-clipboard>-->
       </core-collapse>
-      
+
     </core-scaffold>
     <!--<paper-fab icon="arrow-forward" title="Next" style="position: absolute; right: 1em; bottom: 1em;" on-tap="{{listURLs}}"></paper-fab>-->
   </template>
@@ -119,17 +119,6 @@
       showObsolete: false,
       ready: function() {
 
-        this.navigatorPlatform = {};
-        this.navigatorPlatform.linux = navigator.platform.indexOf("Linux") != -1;
-        this.navigatorPlatform.macosx = navigator.platform.indexOf("Macosx") != -1;
-        this.navigatorPlatform.windows = navigator.platform.indexOf("Windows") != -1;
-
-        this.refresh();
-
-        return;
-      },
-      refresh: function() {
-        
         var myElement = this;
         var file = "packages.csv";
 
@@ -142,116 +131,141 @@
            * https://github.com/mholt/PapaParse/issues/150
            */
           skipEmptyLines: true,
-        	complete: function(results) {
-        		console.log("Finished:", results);
-        		myElement.packages = results;
-        		
-        		/*
-        		 * api-level and group mapping - group name = Android {SDK Platform version} (API {api-level})
-        		 */
-        		var groups = {};
-        		for (var i in results.data) {
-        		  var p = results.data[i];
-        		  
-        		  if (!myElement.showObsolete && p.obsolete == "true") {
-        		    continue;
-        		  }
-              if (!(myElement.navigatorPlatform.linux && p.linuxURL) &&
-                  !(myElement.navigatorPlatform.macosx && p.macosxURL) &&
-                  !(myElement.navigatorPlatform.windows && p.windowsURL)) {
-                continue;
-              }
-        		  
-        		  var n;
-        		  if (p.name == "Android SDK Tools" || 
-        		      p.name == "Android SDK Platform-tools" || 
-        		      p.name == "Android SDK Build-tools") {
-    		        n = "Tools";
-    		      } else if (p["api-level"] == "") {
-    		        n = "Extras";
-    		      } else {
-    		        n = "API " + p["api-level"];
-    		      }
-      		    var g = groups[n];
-      		    if (!g) {
-      		      g = {
-      		        packages: []
-      		      };
-      		      if (n == "Tools" || n == "Extras") {
-      		        g.name = n;
-      		      }
-      		      groups[n] = g;
-      		    }
-      		    g.packages.push(p);
-      		    if (p.name == "SDK Platform") {
-      		      g.name = "Android " + p.version + " (" + n + ")";
-      		      g["api-level"] = p["api-level"];
-      		    }
-        		}
-        		console.log(groups);
+          complete: function(results) {
+            console.log("Loaded Android SDK packages:", results);
+            myElement.packages = results;
 
-        		myElement.groups = [];
-        		var maxApiLevel = 0;
-        		for (var i in groups) {
-        		  myElement.groups.push(groups[i]);
-        		  
-        		  var apiLevel = parseInt(groups[i]["api-level"]);
-        		  if (maxApiLevel < apiLevel) {
-        		    maxApiLevel = apiLevel;
-        		  }
-        		}
+            // myElement.navigatorPlatform = {};
+            myElement.navigatorPlatform.linux = navigator.platform.indexOf("Linux") != -1;
+            myElement.navigatorPlatform.macosx = navigator.platform.indexOf("Macosx") != -1;
+            myElement.navigatorPlatform.windows = navigator.platform.indexOf("Windows") != -1;
 
-        		groups["Tools"]["api-level"] = maxApiLevel + 1;
-        		groups["Extras"]["api-level"] = 0;
-        		myElement.groups.sort(function(a, b) {
-        		  return parseInt(b["api-level"]) - parseInt(a["api-level"]);
-        		});
-        		
-      		  groups["Tools"].packages.sort(function(a, b) {
-      		    return parseInt(b.revision) - parseInt(a.revision);
-      		  });
-      		  
-        		return;
+            myElement.refresh1(myElement);
+
+            return;
         	}
         });
 
         return;
       },
-    	listURLs: function(event, detail, sender) {
+      refresh: function() {
+        this.refresh1(this);
+      },
+      refresh1: function(myElement) {
+
+        /*
+         * api-level and group mapping - group name = Android {SDK Platform version} (API {api-level})
+         */
+        var groups = {};
+        for (var i in myElement.packages.data) {
+          var p = myElement.packages.data[i];
+
+          if (!myElement.showObsolete && p.obsolete == "true") {
+            continue;
+          }
+          if (!(myElement.navigatorPlatform.linux && p.linuxURL) &&
+              !(myElement.navigatorPlatform.macosx && p.macosxURL) &&
+              !(myElement.navigatorPlatform.windows && p.windowsURL)) {
+            continue;
+          }
+
+          var n;
+          if (p.name == "Android SDK Tools" || 
+              p.name == "Android SDK Platform-tools" || 
+              p.name == "Android SDK Build-tools") {
+            n = "Tools";
+          } else if (p["api-level"] == "") {
+            n = "Extras";
+          } else {
+            n = "API " + p["api-level"];
+          }
+          var g = groups[n];
+          if (!g) {
+            g = {
+              packages: []
+            };
+            if (n == "Tools" || n == "Extras") {
+              g.name = n;
+            }
+            groups[n] = g;
+          }
+          g.packages.push(p);
+          if (p.name == "SDK Platform") {
+            g.name = "Android " + p.version + " (" + n + ")";
+            g["api-level"] = p["api-level"];
+          }
+        }
+        console.log(groups);
+
+        myElement.groups = [];
+        var maxApiLevel = 0;
+        for (var i in groups) {
+          myElement.groups.push(groups[i]);
+          
+          var apiLevel = parseInt(groups[i]["api-level"]);
+          if (maxApiLevel < apiLevel) {
+            maxApiLevel = apiLevel;
+          }
+        }
+        
+        if (groups["Tools"]) {
+        	groups["Tools"]["api-level"] = maxApiLevel + 1;
+          groups["Tools"].packages.sort(function(a, b) {
+            return parseInt(b.revision) - parseInt(a.revision);
+          });
+        }
+        if (groups["Extras"]) {
+        	groups["Extras"]["api-level"] = 0;
+        }
+        myElement.groups.sort(function(a, b) {
+          return parseInt(b["api-level"]) - parseInt(a["api-level"]);
+        });
+
+        myElement.listURLs1(myElement);
+      		  
+        return;
+      },
+      listURLs1: function(myElement) {
         // console.log(event);
         // console.log(detail);
         // console.log(sender);
         
-        console.log(this.packages);
+        console.log(myElement.packages);
         
         var urlList = [];
-        for (var i in this.packages.data) {
-          var p = this.packages.data[i];
+        for (var i in myElement.packages.data) {
+          var p = myElement.packages.data[i];
           if (p.selected) {
-            if (this.navigatorPlatform.linux && p.linuxURL) {
+            if (!myElement.showObsolete && p.obsolete == "true") {
+              continue;
+            }
+            if (myElement.navigatorPlatform.linux && p.linuxURL) {
               urlList.push(p.linuxURL);
             }
-            if (this.navigatorPlatform.macosx && p.macosxURL) {
+            if (myElement.navigatorPlatform.macosx && p.macosxURL) {
               urlList.push(p.macosxURL);
             }
-            if (this.navigatorPlatform.windows && p.windowsURL) {
+            if (myElement.navigatorPlatform.windows && p.windowsURL) {
               urlList.push(p.windowsURL);
             }
           }
         }
         
         // console.log(urlList);
-        this.urlList = urlList;
+        myElement.urlList = urlList;
         
         return;
-    	},
-    	toggleFilterDisplay: function(event, detail, sender) {
-    	 // console.log("toggle");
-    	  this.$.filterContainer.toggle();
-    	},
-    	toggleUrlDisplay: function(event, detail, sender) {
-    	  this.$.urlContainer.toggle();
-    	},
+      },
+      listURLs: function(event, detail, sender) {
+        this.listURLs1(this);
+      },
+      toggleFilterDisplay: function(event, detail, sender) {
+       // console.log("toggle");
+        this.$.filterContainer.toggle();
+      },
+      toggleUrlDisplay: function(event, detail, sender) {
+        this.$.urlContainer.toggle();
+      },
       updateModel: function() {
       }
     });
