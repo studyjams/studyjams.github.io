@@ -136,12 +136,20 @@
             myElement.packages = results;
 
             /*
+             * javascript - What is the list of possible values for navigator.platform as of today? - Stack Overflow
              * http://stackoverflow.com/a/19883965
              */
             // myElement.navigatorPlatform = {};
-            myElement.navigatorPlatform.linux = navigator.platform.indexOf("Linux") != -1;
-            myElement.navigatorPlatform.macosx = navigator.platform.indexOf("Mac") != -1;
-            myElement.navigatorPlatform.windows = navigator.platform.indexOf("Win32") != -1;
+            // myElement.navigatorPlatform.linux = navigator.platform.indexOf("Linux") != -1;
+            // myElement.navigatorPlatform.macosx = navigator.platform.indexOf("Mac") != -1;
+            // myElement.navigatorPlatform.windows = navigator.platform.indexOf("Win") != -1;
+            /*
+             * How to detect my browser version and operating system using JavaScript? - Stack Overflow
+             * http://stackoverflow.com/a/11219680
+             */
+            myElement.navigatorPlatform.linux = navigator.appVersion.indexOf("Linux") != -1;
+            myElement.navigatorPlatform.macosx = navigator.appVersion.indexOf("Mac") != -1;
+            myElement.navigatorPlatform.windows = navigator.appVersion.indexOf("Win") != -1;
 
             myElement.refresh1(myElement);
 
