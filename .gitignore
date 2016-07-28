@@ -1,4 +1,5 @@
 *.exe
+*.iml
 *.orig
 *.sh
 *.tgz
@@ -8,4 +9,4 @@ dl
 orig
 packages.csv
 script
-sdk/index.html
+studio/index.html
